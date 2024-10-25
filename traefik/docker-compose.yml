@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  reverse-proxy:
+    restart: always
+    image: traefik:v2.9
+    ports:
+      # The HTTP port
+      - "80:80"
+      - "443:80"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8085:8085"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./config/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./config/dynamic.yml:/etc/traefik/dynamic.yml:ro
+      - ./certs:/tools/certs:ro
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - web
+      - default
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.phpmyadmin.rule=Host(`adminer.loc`)
+      - traefik.http.routers.phpmyadmin-https.rule=Host(`adminer.loc`)
+      - traefik.http.routers.phpmyadmin-https.tls=true
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    restart: always
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
+    networks:
+      - web
+      - default
+
+networks:
+  web:
+    name: traefik_default
+    external: true
