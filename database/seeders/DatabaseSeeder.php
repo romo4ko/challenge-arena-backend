@@ -14,7 +14,12 @@ class DatabaseSeeder extends Seeder
             UsersSeeder::class,
             AchievementsSeeder::class,
             ChallengesSeeder::class,
-            TeamsSeeder::class
+            TeamsSeeder::class,
+            UsersAchievementsSeeder::class,
+            UserTeamsSeeder::class,
+            UserChallengesSeeder::class,
+            TeamsAchievementsSeeder::class,
+            TeamsChallengesSeeder::class
         ]);
     }
 }
