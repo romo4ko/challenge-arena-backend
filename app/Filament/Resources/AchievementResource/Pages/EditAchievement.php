@@ -8,6 +8,11 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditAchievement extends EditRecord
 {
+    public function getHeading(): string
+    {
+        return 'Изменить ачивку';
+    }
+
     protected static string $resource = AchievementResource::class;
 
     protected function getHeaderActions(): array

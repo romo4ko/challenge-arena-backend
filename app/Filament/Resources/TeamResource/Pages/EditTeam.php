@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Filament\Resources\UserResource\Pages;
+namespace App\Filament\Resources\TeamResource\Pages;
 
-use App\Filament\Resources\UserResource;
+use App\Filament\Resources\TeamResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditUser extends EditRecord
+class EditTeam extends EditRecord
 {
     public function getHeading(): string
     {
-        return 'Изменить пользователя';
+        return 'Изменить команду';
     }
-
-    protected static string $resource = UserResource::class;
+    protected static string $resource = TeamResource::class;
 
     protected function getHeaderActions(): array
     {

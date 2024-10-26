@@ -17,11 +17,6 @@ class Achievement extends Model
         'image'
     ];
 
-    public function challenges(): BelongsToMany
-    {
-        return $this->belongsToMany(Challenge::class);
-    }
-
     public function users(): belongsToMany
     {
         return $this->belongsToMany(User::class);

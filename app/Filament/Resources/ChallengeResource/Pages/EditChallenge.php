@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Filament\Resources\UserResource\Pages;
+namespace App\Filament\Resources\ChallengeResource\Pages;
 
-use App\Filament\Resources\UserResource;
+use App\Filament\Resources\ChallengeResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditUser extends EditRecord
+class EditChallenge extends EditRecord
 {
     public function getHeading(): string
     {
-        return 'Изменить пользователя';
+        return 'Изменить челлендж';
     }
 
-    protected static string $resource = UserResource::class;
+    protected static string $resource = ChallengeResource::class;
 
     protected function getHeaderActions(): array
     {

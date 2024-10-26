@@ -15,7 +15,6 @@ class Team extends Model
     protected $fillable = [
         'name',
         'description',
-        'code'
     ];
 
     public function users(): belongsToMany
