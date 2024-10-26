@@ -36,11 +36,18 @@ class UserController extends Controller
         return $this->userService->team($teams);
     }
 
-    public function challenge()
+    public function challenge(int $id): array
     {
+        $challenges = User::query()->findOrFail($id)?->challenges()->orderBy('end_date', 'desc')->get();
+
+        return $this->userService->challenge($challenges);
     }
 
-    public function achievement()
+    public function achievement(int $id): array
     {
+        $achievementsTeam = Team::query()->findOrFail($id)?->achievements()->get();
+        $achievementPersonal = User::query()->findOrFail($id)?->achievements()->get();
+
+        return $this->userService->achievement($achievementsTeam, $achievementPersonal);
     }
 }

@@ -5,15 +5,23 @@ declare(strict_types=1);
 namespace App\Services\Api;
 
 use App\DTO\Api\User\Request\UserUpdateDTO;
+use App\DTO\Api\User\Response\UserAchievementPersonalDTO;
+use App\DTO\Api\User\Response\UserAchievementTeamsDTO;
+use App\DTO\Api\User\Response\UserChallengeDTO;
 use App\DTO\Api\User\Response\UserTeamDTO;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 
 class UserService
 {
-    public function show()
+    public function achievement(Collection $achievementsTeam, Collection $achievementPersonal): array
     {
+        $personal = UserAchievementPersonalDTO::collect($achievementsTeam)->toArray();
+        $teams = UserAchievementTeamsDTO::collect($achievementPersonal)->toArray();
+
+       return array_merge($personal, $teams);
     }
 
     public function update(User $user, UserUpdateDTO $userUpdateDTO): array|JsonResponse
@@ -40,12 +48,13 @@ class UserService
         return response()->json(['message' => 'just meme'], 403);
     }
 
-    public function team($team): array
+    public function team(Collection $team): array
     {
         return UserTeamDTO::collect($team)->toArray();
     }
 
-    public function challenge()
+    public function challenge(Collection $challenges): array
     {
+        return UserChallengeDTO::collect($challenges)->toArray();
     }
 }

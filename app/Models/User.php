@@ -40,9 +40,9 @@ class User extends Authenticatable implements FilamentUser
         return $this->belongsToMany(Achievement::class, 'users_achievements');
     }
 
-    public function teams()
+    public function teams(): BelongsToMany
     {
-        return $this->belongsToMany(Team::class, 'users_teams');
+        return $this->belongsToMany(Team::class, 'users_teams', 'user_id', 'team_id');
     }
 
     /**
