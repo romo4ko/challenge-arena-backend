@@ -18,11 +18,17 @@ use Illuminate\Support\Facades\Hash;
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-users';
+
     protected static ?int $navigationSort = 1;
+
     protected static ?string $navigationLabel = 'Пользователи';
+
     protected static ?string $modeLabel = 'Пользователи';
+
     protected static ?string $pluralModelLabel = 'Пользователи';
+
     protected static ?string $breadcrumb = 'Пользователи';
 
     protected static ?string $label = 'Пользователя';

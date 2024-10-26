@@ -29,9 +29,9 @@ class Challenge extends Model
         return $this->belongsToMany(User::class, 'users_challenges');
     }
 
-    public function achievements(): belongsToMany
+    public function achievement(): HasOne
     {
-        return $this->belongsToMany(Achievement::class);
+        return $this->hasOne(Achievement::class, 'id', 'achievement_id');
     }
 
     public function teams(): belongsToMany

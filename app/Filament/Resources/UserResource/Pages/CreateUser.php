@@ -8,5 +8,10 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateUser extends CreateRecord
 {
+    public function getHeading(): string
+    {
+        return 'Создать пользователя';
+    }
+
     protected static string $resource = UserResource::class;
 }

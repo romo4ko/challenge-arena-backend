@@ -21,11 +21,17 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class AchievementResource extends Resource
 {
     protected static ?string $model = Achievement::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-star';
-    protected static ?int $navigationSort = 1;
+
+    protected static ?int $navigationSort = 3;
+
     protected static ?string $navigationLabel = 'Ачивки';
+
     protected static ?string $modeLabel = 'Ачивки';
+
     protected static ?string $pluralModelLabel = 'Ачивки';
+
     protected static ?string $breadcrumb = 'Ачивки';
 
     protected static ?string $label = 'Ачивку';
@@ -63,8 +69,8 @@ class AchievementResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
                     ->label('Описание')
-                    ->limit(20),
-                ImageColumn::make('image.path')
+                    ->limit(30),
+                ImageColumn::make('image')
                     ->label('Изображение')
                     ->default('-'),
             ])

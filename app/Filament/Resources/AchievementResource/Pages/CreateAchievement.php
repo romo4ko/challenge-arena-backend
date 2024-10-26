@@ -8,5 +8,10 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateAchievement extends CreateRecord
 {
+    public function getHeading(): string
+    {
+        return 'Создать ачивку';
+    }
+
     protected static string $resource = AchievementResource::class;
 }
