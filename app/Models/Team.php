@@ -10,11 +10,10 @@ class Team extends Model
 {
     use HasFactory;
 
-    public $timestamps = true;
-
     protected $fillable = [
         'name',
         'description',
+        'image'
     ];
 
     public function users(): belongsToMany
