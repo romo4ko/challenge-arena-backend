@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Filament\Models\Contracts\FilamentUser;
@@ -12,9 +14,9 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements FilamentUser
 {
-    use HasFactory, Notifiable, HasApiTokens;
-
-    public $timestamps = true;
+    use HasFactory;
+    use Notifiable;
+    use HasApiTokens;
 
     protected $fillable = [
         'name',
