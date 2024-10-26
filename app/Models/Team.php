@@ -2,19 +2,34 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Team extends Model
 {
     use HasFactory;
 
+    public $timestamps = true;
+
     protected $fillable = [
         'name',
         'description',
-        'image'
+        'captain_id'
     ];
+
+    protected $appends = [
+        'active_challenges',
+        'completed_challenges'
+    ];
+
+    public function captain(): HasOne
+    {
+        return $this->hasOne(User::class, 'captain_id');
+    }
 
     public function users(): belongsToMany
     {
@@ -30,4 +45,20 @@ class Team extends Model
     {
         return $this->belongsToMany(Achievement::class, 'teams_achievements');
     }
+
+    public function getActiveChallengesAttribute(): Collection
+    {
+        return $this->challenges()
+            ->where('start_date', '<=', Carbon::now())
+            ->where('end_date', '>=', Carbon::now())
+            ->get();
+    }
+
+    public function getCompletedChallengesAttribute(): Collection
+    {
+        return $this->challenges()
+            ->where('end_date', '<', Carbon::now())
+            ->get();
+    }
+
 }

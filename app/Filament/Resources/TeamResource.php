@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TeamResource\Pages;
+use App\Models\Challenge;
 use App\Models\Team;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -39,15 +40,34 @@ class TeamResource extends Resource
                 Forms\Components\Textarea::make('description')
                     ->label('Описание')
                     ->rows(5),
+                Forms\Components\Select::make('captain_id')
+                    ->label('Капитан')
+                    ->relationship('users', 'name')
+                    ->searchable()
+                    ->preload(),
                 Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Select::make('users')
                             ->label('Участники')
                             ->relationship('users', 'name')
+                            ->preload()
                             ->multiple(),
                         Forms\Components\Select::make('achievements')
                             ->label('Достижения')
                             ->relationship('achievements', 'name')
+                            ->preload()
+                            ->multiple(),
+                    ])->columns(2),
+                Forms\Components\Section::make()
+                    ->schema([
+                        Forms\Components\Select::make('challenges')
+                            ->label('Челленджи')
+                            ->relationship('challenges', 'name')
+                            ->getOptionLabelFromRecordUsing(
+                                function (Challenge $record) {
+                                    return $record->name . ' ' . ($record->is_finished ? '(Завершён)' : '');
+                                })
+                            ->preload()
                             ->multiple(),
                     ])->columns(2)
             ])->columns(1);
