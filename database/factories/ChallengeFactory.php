@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Enums\ChallengeType;
 use App\Models\Achievement;
+use App\Models\Enums\Challenge\ChallengeType;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

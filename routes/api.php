@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\TeamController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,5 +17,10 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
         Route::get('/{id}/teams', [UserController::class, 'team'])->name('users.team');
         Route::get('/{id}/challenges', [UserController::class, 'challenge'])->name('users.challenge');
         Route::get('/{id}/achievements', [UserController::class, 'achievement'])->name('users.achievement');
+    });
+
+    Route::group(['prefix' => 'teams'], static function () {
+        Route::get('/{id}', [TeamController::class, 'show'])->name('teams.show');
+        Route::post('/{id}', [TeamController::class, 'update'])->name('teams.update');
     });
 });

@@ -13,9 +13,8 @@ class Team extends Model
 {
     use HasFactory;
 
-    public $timestamps = true;
-
     protected $fillable = [
+        'image',
         'name',
         'description',
         'captain_id'
