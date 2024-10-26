@@ -85,6 +85,7 @@ class UserResource extends Resource
                                 function (Challenge $record) {
                                     return $record->name . ' ' . ($record->is_finished ? '(Завершён)' : '');
                                 })
+                            ->disabled()
                             ->preload()
                             ->multiple(),
                     ])->columns(1)
