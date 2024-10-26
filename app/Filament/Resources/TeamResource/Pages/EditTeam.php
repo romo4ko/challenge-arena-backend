@@ -10,7 +10,7 @@ class EditTeam extends EditRecord
 {
     public function getHeading(): string
     {
-        return 'Изменить команду';
+        return 'Управление командой';
     }
     protected static string $resource = TeamResource::class;
 

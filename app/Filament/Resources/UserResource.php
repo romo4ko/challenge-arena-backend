@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
+use App\Models\Challenge;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -62,6 +63,31 @@ class UserResource extends Resource
                     Forms\Components\TextInput::make('patronymic')->label('Отчество'),
                     Forms\Components\Textarea::make('about')->label('О себе')->rows(5),
                 ])->columns(),
+                Forms\Components\Section::make()
+                    ->schema([
+                        Forms\Components\Select::make('teams')
+                            ->label('Команды, в которых состоит пользователь')
+                            ->relationship('teams', 'name')
+                            ->preload()
+                            ->multiple(),
+                        Forms\Components\Select::make('achievements')
+                            ->label('Достижения пользователя')
+                            ->relationship('achievements', 'name')
+                            ->preload()
+                            ->multiple(),
+                    ])->columns(2),
+                Forms\Components\Section::make()
+                    ->schema([
+                        Forms\Components\Select::make('challenges')
+                            ->label('Челленджи пользователя')
+                            ->relationship('challenges', 'name')
+                            ->getOptionLabelFromRecordUsing(
+                                function (Challenge $record) {
+                                    return $record->name . ' ' . ($record->is_finished ? '(Завершён)' : '');
+                                })
+                            ->preload()
+                            ->multiple(),
+                    ])->columns(1)
             ]);
     }
 
@@ -76,15 +102,29 @@ class UserResource extends Resource
                     ->label('Фамилия')
                     ->default('-')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('patronymic')
-                    ->label('Отчество')
-                    ->default('-')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->label('Почта')
                     ->searchable(),
                 CheckboxColumn::make('is_confirmed')
-                    ->label('Верифицирован'),
+                    ->label('Проверен'),
+                Tables\Columns\TextColumn::make('challenges_count')
+                    ->counts('challenges')
+                    ->badge()
+                    ->color(
+                        fn($record) => $record->challenges->count() > 0
+                            ? 'success' : 'danger'
+                    )
+                    ->label('Челленджей')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('achievements_count')
+                    ->counts('achievements')
+                    ->badge()
+                    ->color(
+                        fn($record) => $record->achievements->count() > 0
+                            ? 'success' : 'danger'
+                    )
+                    ->label('Достижений')
+                    ->sortable()
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
@@ -94,7 +134,7 @@ class UserResource extends Resource
                     ->label('Не верифицированные'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Управление'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
