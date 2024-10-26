@@ -68,6 +68,7 @@ class TeamResource extends Resource
                                     return $record->name . ' ' . ($record->is_finished ? '(Завершён)' : '');
                                 })
                             ->preload()
+                            ->disabled()
                             ->multiple(),
                     ])->columns(1)
             ])->columns(1);

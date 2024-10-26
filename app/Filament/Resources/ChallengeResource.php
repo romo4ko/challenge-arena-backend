@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\ChallengeType;
 use App\Filament\Resources\ChallengeResource\Pages;
 use App\Models\Challenge;
 use Filament\Forms;
@@ -33,10 +34,25 @@ class ChallengeResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $record = $form->getRecord();
+
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->label('Название')
+                    ->required()
+                    ->maxWidth('sm'),
+                Forms\Components\Select::make('type')
+                    ->label('Тип')
+                    ->options([
+                        'personal' => 'Персональный',
+                        'team' => 'Командный',
+                    ])
+                    ->disabled(
+                        function ($record) {
+                            return $record->teams->count() > 0 || $record->users->count() > 0;
+                        }
+                    )
                     ->required()
                     ->maxWidth('sm'),
                 Forms\Components\Textarea::make('description')
@@ -67,7 +83,20 @@ class ChallengeResource extends Resource
                     ->directory('achievements')
                     ->visibility('public')
                     ->maxWidth('xs')
-                    ->label('Изображение')
+                    ->label('Изображение'),
+                Forms\Components\Section::make()
+                    ->schema([
+                        $record->type === ChallengeType::PERSONAL->value ? Forms\Components\Select::make( 'users')
+                            ->label('Участники челленджа')
+                            ->relationship('users', 'name')
+                            ->preload()
+                            ->multiple() :
+                        Forms\Components\Select::make('teams')
+                            ->label('Команды челленджа')
+                            ->relationship('teams', 'name')
+                            ->preload()
+                            ->multiple(),
+                    ])->columns(2),
             ])->columns(1);
     }
 
@@ -81,6 +110,8 @@ class ChallengeResource extends Resource
                 Tables\Columns\TextColumn::make('description')
                     ->label('Описание')
                     ->limit(30),
+                Tables\Columns\TextColumn::make('type_name')
+                    ->label('Тип'),
                 Tables\Columns\TextColumn::make('start_date')
                     ->dateTime('d F')
                     ->label('Дата начала'),

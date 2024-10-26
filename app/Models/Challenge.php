@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ChallengeType;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,6 +26,12 @@ class Challenge extends Model
         'type'
     ];
 
+    protected $appends = [
+        'is_finished',
+        'is_in_progress',
+        'type_name'
+    ];
+
     public function users(): belongsToMany
     {
         return $this->belongsToMany(User::class, 'users_challenges');
@@ -43,5 +50,15 @@ class Challenge extends Model
     public function getIsFinishedAttribute(): bool
     {
         return $this->end_date < Carbon::now();
+    }
+
+    public function getIsInProgressAttribute(): bool
+    {
+        return $this->start_date < Carbon::now() && $this->end_date > Carbon::now();
+    }
+
+    public function getTypeNameAttribute()
+    {
+        return $this->type == ChallengeType::PERSONAL->value ? 'Персональный' : 'Командный';
     }
 }

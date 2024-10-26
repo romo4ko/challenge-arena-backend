@@ -13,8 +13,12 @@ class ChallengesSeeder extends Seeder
     {
         $challenges = config('base.challenges');
 
-        foreach ($challenges as $challenge) {
-            Challenge::factory()->create($challenge);
+        if (env('APP_DEBUG')) {
+            Challenge::factory(10)->create();
+        } else {
+            foreach ($challenges as $challenge) {
+                Challenge::factory()->create($challenge);
+            }
         }
     }
 }
