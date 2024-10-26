@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Challenge extends Model
 {
@@ -12,30 +14,32 @@ class Challenge extends Model
     protected $fillable = [
         'name',
         'description',
-        'category_id',
         'start_date',
         'end_date',
+        'result',
+        'created_at',
         'achievement_id',
-        'image_id'
+        'image_id',
+        'type'
     ];
 
-    public function users()
+    public function users(): belongsToMany
     {
         return $this->belongsToMany(User::class, 'users_challenges');
     }
 
-    public function image()
+    public function images(): hasOne
     {
-        return $this->belongsTo(Image::class);
+        return $this->hasOne(Image::class);
     }
 
-    public function category()
+    public function achievements(): belongsToMany
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Achievement::class);
     }
 
-    public function achievement()
+    public function teams(): belongsToMany
     {
-        return $this->belongsTo(Achievement::class);
+        return $this->belongsToMany(Team::class, 'teams_challenges');
     }
 }

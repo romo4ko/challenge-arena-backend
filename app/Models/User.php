@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -17,22 +18,35 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
     protected $fillable = [
         'name',
         'surname',
+        'patronymic',
         'email',
         'password',
         'about',
         'image_id',
-        'is_admin'
+        'is_admin',
+        'is_confirmed'
     ];
 
-    public function challenges()
+    public function challenges(): BelongsToMany
     {
         return $this->belongsToMany(Challenge::class, 'users_challenges');
     }
 
-    public function image()
+    public function achievements(): BelongsToMany
+    {
+        return $this->belongsToMany(Achievement::class, 'users_achievements');
+    }
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class, 'users_teams');
+    }
+
+    public function images()
     {
         return $this->belongsTo(Image::class);
     }
