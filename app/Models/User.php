@@ -19,9 +19,23 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
         'email',
         'password',
+        'about',
+        'image_id',
+        'is_admin'
     ];
+
+    public function challenges()
+    {
+        return $this->belongsToMany(Challenge::class, 'users_challenges');
+    }
+
+    public function image()
+    {
+        return $this->belongsTo(Image::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
