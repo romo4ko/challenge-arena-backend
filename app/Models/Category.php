@@ -11,8 +11,8 @@ class Category extends Model
 
     protected $fillable = ['name'];
 
-    public function challenges()
-    {
-        return $this->hasMany(Challenge::class);
+    public  function  challenges ()
+     {
+          return $this->hasMany(Challenge::class);
     }
 }
