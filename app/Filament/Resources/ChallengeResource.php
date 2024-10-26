@@ -56,6 +56,7 @@ class ChallengeResource extends Resource
                 Forms\Components\Select::make('achievement_id')
                     ->label('Ачивка')
                     ->relationship('achievement', 'name')
+                    ->searchable()
                     ->nullable(),
                 FileUpload::make('image')
                     ->rules(['image'])
@@ -105,7 +106,7 @@ class ChallengeResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Управление'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

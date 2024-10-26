@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -37,5 +38,10 @@ class Challenge extends Model
     public function teams(): belongsToMany
     {
         return $this->belongsToMany(Team::class, 'teams_challenges');
+    }
+
+    public function getIsFinishedAttribute(): bool
+    {
+        return $this->end_date < Carbon::now();
     }
 }

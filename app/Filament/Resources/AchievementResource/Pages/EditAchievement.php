@@ -10,7 +10,7 @@ class EditAchievement extends EditRecord
 {
     public function getHeading(): string
     {
-        return 'Изменить ачивку';
+        return 'Управление ачивкой';
     }
 
     protected static string $resource = AchievementResource::class;

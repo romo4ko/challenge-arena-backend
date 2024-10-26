@@ -10,7 +10,7 @@ class EditChallenge extends EditRecord
 {
     public function getHeading(): string
     {
-        return 'Изменить челлендж';
+        return 'Управление челленджем';
     }
 
     protected static string $resource = ChallengeResource::class;

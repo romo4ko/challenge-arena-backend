@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TeamResource\Pages;
+use App\Models\Challenge;
 use App\Models\Team;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -39,17 +40,36 @@ class TeamResource extends Resource
                 Forms\Components\Textarea::make('description')
                     ->label('Описание')
                     ->rows(5),
+                Forms\Components\Select::make('captain_id')
+                    ->label('Капитан')
+                    ->relationship('users', 'name')
+                    ->searchable()
+                    ->preload(),
                 Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Select::make('users')
-                            ->label('Участники')
+                            ->label('Участники команды')
                             ->relationship('users', 'name')
+                            ->preload()
                             ->multiple(),
                         Forms\Components\Select::make('achievements')
-                            ->label('Достижения')
+                            ->label('Достижения команды')
                             ->relationship('achievements', 'name')
+                            ->preload()
                             ->multiple(),
-                    ])->columns(2)
+                    ])->columns(2),
+                Forms\Components\Section::make()
+                    ->schema([
+                        Forms\Components\Select::make('challenges')
+                            ->label('Челленджи команды')
+                            ->relationship('challenges', 'name')
+                            ->getOptionLabelFromRecordUsing(
+                                function (Challenge $record) {
+                                    return $record->name . ' ' . ($record->is_finished ? '(Завершён)' : '');
+                                })
+                            ->preload()
+                            ->multiple(),
+                    ])->columns(1)
             ])->columns(1);
     }
 
@@ -70,7 +90,8 @@ class TeamResource extends Resource
                         fn($record) => $record->users->count() > 0
                             ? 'success' : 'danger'
                     )
-                    ->label('Участников'),
+                    ->label('Участников')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('achievements_count')
                     ->counts('achievements')
                     ->badge()
@@ -79,12 +100,22 @@ class TeamResource extends Resource
                             ? 'success' : 'danger'
                     )
                     ->label('Достижений')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('challenges_count')
+                    ->counts('challenges')
+                    ->badge()
+                    ->color(
+                        fn($record) => $record->challenges->count() > 0
+                            ? 'success' : 'danger'
+                    )
+                    ->label('Челленджей')
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Управление'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

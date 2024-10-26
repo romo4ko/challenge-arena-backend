@@ -10,7 +10,7 @@ class EditUser extends EditRecord
 {
     public function getHeading(): string
     {
-        return 'Изменить пользователя';
+        return 'Управление пользователем';
     }
 
     protected static string $resource = UserResource::class;
