@@ -1,11 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -22,6 +21,9 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    public $timestamps = true;
+
     protected $fillable = [
         'name',
         'surname',
@@ -30,15 +32,27 @@ class User extends Authenticatable
         'about',
         'image_id',
         'is_admin',
+        'is_confirmed',
+        'is_admin',
         'patronymic',
     ];
 
-    public function challenges()
+    public function challenges(): BelongsToMany
     {
         return $this->belongsToMany(Challenge::class, 'users_challenges');
     }
 
-    public function image()
+    public function achievements(): BelongsToMany
+    {
+        return $this->belongsToMany(Achievement::class, 'users_achievements');
+    }
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class, 'users_teams');
+    }
+
+    public function images()
     {
         return $this->belongsTo(Image::class);
     }
