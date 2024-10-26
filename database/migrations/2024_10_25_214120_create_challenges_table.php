@@ -15,12 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
+            $table->text('result')->nullable();
             $table->timestamps();
             $table->foreignId('achievement_id')->nullable()->constrained('achievements')->onDelete('set null');
             $table->foreignId('image_id')->nullable()->constrained('images')->onDelete('set null');
+            $table->string('type')->default(false);
         });
     }
 
