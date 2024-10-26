@@ -8,5 +8,10 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateTeam extends CreateRecord
 {
+    public function getHeading(): string
+    {
+        return 'Создать команду';
+    }
+
     protected static string $resource = TeamResource::class;
 }
