@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Api;
 
 use App\DTO\Api\User\Request\UserUpdateDTO;
+use App\DTO\Api\User\Response\UserTeamDTO;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
@@ -39,8 +40,9 @@ class UserService
         return response()->json(['message' => 'just meme'], 403);
     }
 
-    public function team()
+    public function team($team): array
     {
+        return UserTeamDTO::collect($team)->toArray();
     }
 
     public function challenge()
