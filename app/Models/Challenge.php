@@ -11,13 +11,14 @@ class Challenge extends Model
 {
     use HasFactory;
 
+    public $timestamps = true;
+
     protected $fillable = [
         'name',
         'description',
         'start_date',
         'end_date',
         'result',
-        'created_at',
         'achievement_id',
         'image_id',
         'type'

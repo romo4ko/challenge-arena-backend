@@ -10,6 +10,7 @@ class Image extends Model
 {
     use HasFactory;
 
+    public $timestamps = true;
     protected $fillable = ['image_path'];
 
     public function users(): hasMany
