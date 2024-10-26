@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->text('about')->nullable();
-            $table->foreignId('image_id')->nullable()->constrained('images')->onDelete('set null');
+            $table->string('image')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->boolean('is_confirmed')->default(false);
             $table->rememberToken();

@@ -21,7 +21,7 @@ class ChallengeFactory extends Factory
             'start_date' => $now,
             'end_date' => $now->addDays(fake()->numberBetween(1, 30)),
             'achievement_id' => Achievement::query()->inRandomOrder()->first(),
-            'image_id' => null,
+            'image' => null,
             'type' => fake()->randomElement([
                 ChallengeType::PERSONAL,
                 ChallengeType::TEAM

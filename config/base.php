@@ -5,17 +5,17 @@ return [
         [
             'name' => 'Достижение 1',
             'description' => 'Достижение 2',
-            'image_id' => null
+            'image' => null
         ],
         [
             'name' => 'Достижение 1',
             'description' => 'Достижение 2',
-            'image_id' => null
+            'image' => null
         ],
         [
             'name' => 'Достижение 1',
             'description' => 'Достижение 2',
-            'image_id' => null
+            'image' => null
         ],
     ],
 
@@ -23,17 +23,17 @@ return [
         [
             'name' => 'Задание 1',
             'description' => 'Задание 2',
-            'image_id' => null
+            'image' => null
         ],
         [
             'name' => 'Задание 1',
             'description' => 'Задание 2',
-            'image_id' => null
+            'image' => null
         ],
         [
             'name' => 'Задание 1',
             'description' => 'Задание 2',
-            'image_id' => null
+            'image' => null
         ],
     ],
 ];

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('result')->nullable();
             $table->timestamps();
             $table->foreignId('achievement_id')->nullable()->constrained('achievements')->onDelete('set null');
-            $table->foreignId('image_id')->nullable()->constrained('images')->onDelete('set null');
+            $table->string('image')->nullable();
             $table->string('type')->default(false);
         });
     }

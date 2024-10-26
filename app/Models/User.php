@@ -2,22 +2,16 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
 
     public $timestamps = true;
 
@@ -28,7 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'about',
-        'image_id',
+        'image',
         'is_admin',
         'is_confirmed'
     ];
@@ -46,11 +40,6 @@ class User extends Authenticatable
     public function teams()
     {
         return $this->belongsToMany(Team::class, 'users_teams');
-    }
-
-    public function images()
-    {
-        return $this->belongsTo(Image::class);
     }
 
     /**
@@ -74,5 +63,14 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        if ($this->is_admin) {
+            return true;
+        }
+
+        return false;
     }
 }

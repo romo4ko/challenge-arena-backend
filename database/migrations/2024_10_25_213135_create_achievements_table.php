@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->foreignId('image_id')->nullable()->constrained('images')->onDelete('set null');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

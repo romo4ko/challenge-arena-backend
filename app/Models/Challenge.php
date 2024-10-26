@@ -20,18 +20,13 @@ class Challenge extends Model
         'end_date',
         'result',
         'achievement_id',
-        'image_id',
+        'image',
         'type'
     ];
 
     public function users(): belongsToMany
     {
         return $this->belongsToMany(User::class, 'users_challenges');
-    }
-
-    public function images(): hasOne
-    {
-        return $this->hasOne(Image::class);
     }
 
     public function achievements(): belongsToMany

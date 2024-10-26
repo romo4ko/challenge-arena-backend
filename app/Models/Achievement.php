@@ -13,7 +13,11 @@ class Achievement extends Model
 
     public $timestamps = true;
 
-    protected $fillable = ['name', 'description', 'image_id'];
+    protected $fillable = [
+        'name',
+        'description',
+        'image'
+    ];
 
     public function challenges(): BelongsToMany
     {
@@ -23,11 +27,6 @@ class Achievement extends Model
     public function users(): belongsToMany
     {
         return $this->belongsToMany(User::class);
-    }
-
-    public function images(): hasOne
-    {
-        return $this->hasOne(Image::class);
     }
 
     public function teams(): belongsToMany
