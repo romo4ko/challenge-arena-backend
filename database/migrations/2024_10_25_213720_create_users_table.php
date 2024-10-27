@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->boolean('is_confirmed')->default(false);
+            $table->string('telegram_username')->unique()->nullable();
+            $table->string('telegram_id')->unique()->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
