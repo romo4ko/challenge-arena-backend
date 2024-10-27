@@ -47,7 +47,7 @@ class UserController extends Controller
 
     public function challenge(int $id): array
     {
-        $challenges = User::query()->findOrFail($id);
+        $challenges = User::query()->find($id);
 
         return $this->userService->challenge($challenges);
     }

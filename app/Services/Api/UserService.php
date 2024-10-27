@@ -90,10 +90,14 @@ class UserService
         return UserTeamDTO::collect($team)->toArray();
     }
 
-    public function challenge(User $user): array
+    public function challenge(User|null $user): array
     {
-        $challenges = $user->challenges()->orderBy('end_date', 'desc')->get();
+        if($user) {
+            $challenges = $user->challenges()->orderBy('end_date', 'desc')->get();
 
-        return UserChallengeDTO::collect($challenges)->toArray();
+            return UserChallengeDTO::collect($challenges)->toArray();
+        }
+
+        return [];
     }
 }
