@@ -40,7 +40,7 @@ class UserController extends Controller
 
     public function team(int $id): array
     {
-        $teams = User::query()->findOrFail($id);
+        $teams = User::query()->find($id);
 
         return $this->userService->team($teams);
     }

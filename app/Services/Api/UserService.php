@@ -72,11 +72,15 @@ class UserService
         return response()->json(['message' => 'just meme'], 403);
     }
 
-    public function team(User $user): array
+    public function team(User|null $user): array
     {
-        $team = $user->teams()->get();
+        if($user) {
+            $team = $user->teams()->get();
 
-        return UserTeamDTO::collect($team)->toArray();
+            return UserTeamDTO::collect($team)->toArray();
+        }
+
+        return [];
     }
 
     public function teamIsCaptain(User $user): array
