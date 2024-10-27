@@ -3,6 +3,7 @@
 namespace App\Services\Api;
 
 use App\DTO\Api\Challenge\Request\ChallengeFilterDTO;
+use App\DTO\Api\Challenge\Response\ChallengeShowDTO;
 use App\Models\Challenge;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -24,5 +25,10 @@ class ChallengeService
             ->get();
 
         return $games->toArray();
+    }
+
+    public function show(Challenge $challenge): array
+    {
+        return ChallengeShowDTO::from($challenge)->toArray();
     }
 }
