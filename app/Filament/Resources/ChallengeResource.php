@@ -50,6 +50,9 @@ class ChallengeResource extends Resource
                     ])
                     ->disabled(
                         function ($record) {
+                            if ($record === null) {
+                                return false;
+                            }
                             return $record->teams->count() > 0 || $record->users->count() > 0;
                         }
                     )
@@ -57,14 +60,16 @@ class ChallengeResource extends Resource
                     ->maxWidth('sm'),
                 Forms\Components\Textarea::make('description')
                     ->label('Описание')
+                    ->required()
                     ->rows(5),
                 Forms\Components\Section::make()->schema([
                     DateTimePicker::make('start_date')
                         ->label('Дата начала')
+                        ->required()
                         ->default(now()),
                     DateTimePicker::make('end_date')
                         ->label('Дата окончания')
-                        ->nullable(),
+                        ->required(),
                 ])->columns(),
                 Forms\Components\Textarea::make('result')
                     ->label('Результаты завершения челленджа')
@@ -84,7 +89,7 @@ class ChallengeResource extends Resource
                     ->visibility('public')
                     ->maxWidth('xs')
                     ->label('Изображение'),
-                Forms\Components\Section::make()
+                $record !== null ? Forms\Components\Section::make()
                     ->schema([
                         $record->type === ChallengeType::PERSONAL->value ? Forms\Components\Select::make( 'users')
                             ->label('Участники челленджа')
@@ -96,7 +101,7 @@ class ChallengeResource extends Resource
                             ->relationship('teams', 'name')
                             ->preload()
                             ->multiple(),
-                    ])->columns(2),
+                    ])->columns(2) : new Forms\Components\Section(),
             ])->columns(1);
     }
 
