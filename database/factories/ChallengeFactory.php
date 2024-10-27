@@ -16,8 +16,8 @@ class ChallengeFactory extends Factory
         $now = Carbon::now();
 
         return [
-            'name' => fake()->text(20),
-            'description' => fake()->text(),
+            'name' => $this->faker->realText(20),
+            'description' => $this->faker->realText(),
             'start_date' => $now,
             'end_date' => $now->addDays(rand(1, 30)),
             'achievement_id' => Achievement::query()->inRandomOrder()->first(),
