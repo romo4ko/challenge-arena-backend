@@ -55,7 +55,7 @@ class UserResource extends Resource
                     ->disabled()
                     ->nullable(),
                 Forms\Components\Section::make()->schema([
-                    Forms\Components\Checkbox::make('is_confirmed')->label('Верифицирован'),
+                    Forms\Components\Checkbox::make('is_confirmed')->label('Проверен'),
                     Forms\Components\Checkbox::make('is_admin')->label('Администратор'),
                 ])->columns(2),
                 Forms\Components\TextInput::make('password')
