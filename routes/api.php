@@ -23,5 +23,7 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
         Route::get('/{id}', [TeamController::class, 'show'])->name('teams.show');
         Route::post('/{id}', [TeamController::class, 'update'])->name('teams.update');
         Route::get('/{id}/members', [TeamController::class, 'members'])->name('teams.members');
+        Route::get('/{id}/challenges', [TeamController::class, 'challenge'])->name('users.challenge');
+        Route::get('/{id}/achievements', [TeamController::class, 'achievements'])->name('teams.achievements');
     });
 });

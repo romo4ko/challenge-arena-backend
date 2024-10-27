@@ -34,4 +34,14 @@ class TeamController extends Controller
 
         return $this->teamService->members($team);
     }
+
+    public function achievements(int $id): array
+    {
+        return Team::query()->findOrFail($id)?->achievements()->get()->toArray();
+    }
+
+    public function challenge(int $id): array
+    {
+        return Team::query()->findOrFail($id)?->challenges()->get()->toArray();
+    }
 }
