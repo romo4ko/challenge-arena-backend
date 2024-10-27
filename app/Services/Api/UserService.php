@@ -22,15 +22,22 @@ class UserService
         return UserShowDTO::from($user)->toArray();
     }
 
-    public function achievement(Team $team, User $user): array
+    public function achievement(Team|null $team, User|null $user): array
     {
-        $achievementPersonal = $user->achievements()->get();
-        $achievementTeams = $team->achievements()->get();
+        $personal = [];
+        $teams = [];
 
-        $personal = UserAchievementPersonalDTO::collect($achievementPersonal)->toArray();
-        $teams = UserAchievementTeamsDTO::collect($achievementTeams)->toArray();
+        if ($user) {
+            $achievementPersonal = $user->achievements()->get();
+            $personal = UserAchievementPersonalDTO::collect($achievementPersonal)->toArray();
+        }
 
-       return array_merge($personal, $teams);
+        if ($team) {
+            $achievementTeams = $team->achievements()->get();
+            $teams = UserAchievementTeamsDTO::collect($achievementTeams)->toArray();
+        }
+
+        return array_merge($personal, $teams);
     }
 
     public function update(User $user, UserUpdateDTO $userUpdateDTO): array|JsonResponse

@@ -57,11 +57,6 @@ class UserController extends Controller
         $achievementsTeam = Team::query()->find($id);
         $achievementPersonal = User::query()->find($id);
 
-        if(!$achievementPersonal || !$achievementsTeam)
-        {
-            return [];
-        }
-
         return $this->userService->achievement($achievementsTeam, $achievementPersonal);
     }
 }
