@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\DTO\Api\Team\Request\TeamCreateDTO;
 use App\DTO\Api\Team\Request\TeamUpdateDTO;
 use App\Models\Team;
 use App\Models\User;
@@ -16,6 +17,17 @@ class TeamController extends Controller
         protected TeamService $teamService
     )
     {
+    }
+
+    public function create(TeamCreateDTO $teamCreateDTO): array
+    {
+       $team = Team::query()->create([
+           'name' => $teamCreateDTO->name,
+           'description' => $teamCreateDTO->description,
+           'captain_id' => auth()->id(),
+       ]);
+
+       return $team->toArray() ?? [];
     }
 
     public function show(int $id): array
