@@ -33,7 +33,7 @@ class UserController extends Controller
 
     public function update(int $id, UserUpdateDTO $userUpdateDTO): array|JsonResponse
     {
-        $user = User::query()->findOrFail($id);
+        $user = User::query()->find($id);
 
         return $this->userService->update($user, $userUpdateDTO);
     }

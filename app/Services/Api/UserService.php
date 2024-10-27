@@ -44,8 +44,12 @@ class UserService
         return array_merge($personal, $teams);
     }
 
-    public function update(User $user, UserUpdateDTO $userUpdateDTO): array|JsonResponse
+    public function update(User|null $user, UserUpdateDTO $userUpdateDTO): array|JsonResponse
     {
+        if(!$user) {
+            return [];
+        }
+
         if ($user->id === auth()->id()) {
             $savedImage = null;
 
