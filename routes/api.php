@@ -34,10 +34,10 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
     });
 
     Route::group(['prefix' => 'challenges'], static function () {
-        Route::get('/', [ChallengeController::class, 'index'])->name('teams.index');
-        Route::get('/{id}', [ChallengeController::class, 'show'])->name('teams.show');
-        Route::post('/{id}/joins/personal', [ChallengeController::class, 'joinPersonal'])->name('teams.joinPersonal');
-        Route::post('/{id}/joins/teams', [ChallengeController::class, 'joinTeam'])->name('teams.joinTeam');
+        Route::get('/', [ChallengeController::class, 'index'])->name('challenges.index');
+        Route::get('/{id}', [ChallengeController::class, 'show'])->name('challenges.show');
+        Route::post('/{id}/joins/personal/{userId}', [ChallengeController::class, 'joinPersonal'])->name('challenges.joinPersonal');
+        Route::post('/{id}/joins/teams/{teamId}', [ChallengeController::class, 'joinTeam'])->name('challenges.joinTeam');
     });
 });
 
