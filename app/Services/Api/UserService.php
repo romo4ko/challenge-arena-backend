@@ -64,6 +64,13 @@ class UserService
         return UserTeamDTO::collect($team)->toArray();
     }
 
+    public function teamIsCaptain(User $user): array
+    {
+        $team = $user->teams()->where('captain_id', $user->id)->get();
+
+        return UserTeamDTO::collect($team)->toArray();
+    }
+
     public function challenge(User $user): array
     {
         $challenges = $user->challenges()->orderBy('end_date', 'desc')->get();
