@@ -17,24 +17,39 @@ use Illuminate\Support\Facades\Storage;
 
 class UserService
 {
-    public function show(User $user): array
+    public function show(User|null $user): array
     {
-        return UserShowDTO::from($user)->toArray();
+        if ($user) {
+            return UserShowDTO::from($user)->toArray();
+        }
+
+        return [];
     }
 
-    public function achievement(Team $team, User $user): array
+    public function achievement(Team|null $team, User|null $user): array
     {
-        $achievementPersonal = $user->achievements()->get();
-        $achievementTeams = $team->achievements()->get();
+        $personal = [];
+        $teams = [];
 
-        $personal = UserAchievementPersonalDTO::collect($achievementPersonal)->toArray();
-        $teams = UserAchievementTeamsDTO::collect($achievementTeams)->toArray();
+        if ($user) {
+            $achievementPersonal = $user->achievements()->get();
+            $personal = UserAchievementPersonalDTO::collect($achievementPersonal)->toArray();
+        }
 
-       return array_merge($personal, $teams);
+        if ($team) {
+            $achievementTeams = $team->achievements()->get();
+            $teams = UserAchievementTeamsDTO::collect($achievementTeams)->toArray();
+        }
+
+        return array_merge($personal, $teams);
     }
 
-    public function update(User $user, UserUpdateDTO $userUpdateDTO): array|JsonResponse
+    public function update(User|null $user, UserUpdateDTO $userUpdateDTO): array|JsonResponse
     {
+        if(!$user) {
+            return [];
+        }
+
         if ($user->id === auth()->id()) {
             $savedImage = null;
 
@@ -57,11 +72,15 @@ class UserService
         return response()->json(['message' => 'just meme'], 403);
     }
 
-    public function team(User $user): array
+    public function team(User|null $user): array
     {
-        $team = $user->teams()->get();
+        if($user) {
+            $team = $user->teams()->get();
 
-        return UserTeamDTO::collect($team)->toArray();
+            return UserTeamDTO::collect($team)->toArray();
+        }
+
+        return [];
     }
 
     public function teamIsCaptain(User $user): array
@@ -71,10 +90,14 @@ class UserService
         return UserTeamDTO::collect($team)->toArray();
     }
 
-    public function challenge(User $user): array
+    public function challenge(User|null $user): array
     {
-        $challenges = $user->challenges()->orderBy('end_date', 'desc')->get();
+        if($user) {
+            $challenges = $user->challenges()->orderBy('end_date', 'desc')->get();
 
-        return UserChallengeDTO::collect($challenges)->toArray();
+            return UserChallengeDTO::collect($challenges)->toArray();
+        }
+
+        return [];
     }
 }

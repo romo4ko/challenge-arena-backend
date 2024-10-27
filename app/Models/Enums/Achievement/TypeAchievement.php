@@ -2,8 +2,8 @@
 
 namespace App\Models\Enums\Achievement;
 
-enum TypeAchievement: int
+enum TypeAchievement: string
 {
-    case Personal = 1;
-    case Team = 2;
+    case Personal = 'personal';
+    case Team = 'team';
 }

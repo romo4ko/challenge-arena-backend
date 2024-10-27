@@ -19,43 +19,43 @@ class UserController extends Controller
 
     public function teamIsCaptain(int $id): array
     {
-        $teams = User::query()->findOrFail($id);
+        $teams = User::query()->find($id);
 
         return $this->userService->teamIsCaptain($teams);
     }
 
     public function show(int $id): array
     {
-        $user = User::query()->findOrFail($id);
+        $user = User::query()->find($id);
 
         return $this->userService->show($user);
     }
 
     public function update(int $id, UserUpdateDTO $userUpdateDTO): array|JsonResponse
     {
-        $user = User::query()->findOrFail($id);
+        $user = User::query()->find($id);
 
         return $this->userService->update($user, $userUpdateDTO);
     }
 
     public function team(int $id): array
     {
-        $teams = User::query()->findOrFail($id);
+        $teams = User::query()->find($id);
 
         return $this->userService->team($teams);
     }
 
     public function challenge(int $id): array
     {
-        $challenges = User::query()->findOrFail($id);
+        $challenges = User::query()->find($id);
 
         return $this->userService->challenge($challenges);
     }
 
     public function achievement(int $id): array
     {
-        $achievementsTeam = Team::query()->findOrFail($id);
-        $achievementPersonal = User::query()->findOrFail($id);
+        $achievementsTeam = Team::query()->find($id);
+        $achievementPersonal = User::query()->find($id);
 
         return $this->userService->achievement($achievementsTeam, $achievementPersonal);
     }

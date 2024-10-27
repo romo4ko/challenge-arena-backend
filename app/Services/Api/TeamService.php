@@ -13,8 +13,12 @@ use Illuminate\Support\Facades\Storage;
 
 class TeamService
 {
-    public function update(Team $team, TeamUpdateDTO $teamUpdateDTO): array|JsonResponse
+    public function update(Team|null $team, TeamUpdateDTO $teamUpdateDTO): array|JsonResponse
     {
+        if(!$team) {
+            return [];
+        }
+
         if ($team->captain_id === auth()->id()) {
             $savedImage = null;
 
@@ -34,14 +38,18 @@ class TeamService
         return response()->json(['message' => 'you are dont captain'], 403);
     }
 
-    public function members(Team $team): array
+    public function members(Team|null $team): array
     {
-        $members = $team->users()->get();
+        if ($team) {
+            $members = $team->users()->get();
 
-        $membersTeam = $members->map(function (User $user) use ($team) {
-            return TeamMembersDTO::from($user, $team);
-        });
+            $membersTeam = $members->map(function (User $user) use ($team) {
+                return TeamMembersDTO::from($user, $team);
+            });
 
-        return $membersTeam->toArray();
+            return $membersTeam->toArray();
+        }
+
+        return [];
     }
 }

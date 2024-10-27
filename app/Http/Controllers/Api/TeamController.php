@@ -18,30 +18,30 @@ class TeamController extends Controller
 
     public function show(int $id): array
     {
-        return Team::query()->findOrFail($id)?->toArray();
+        return Team::query()->find($id)?->toArray() ?? [];
     }
 
     public function update(int $id, TeamUpdateDTO $teamUpdateDTO): array|JsonResponse
     {
-        $team = Team::query()->findOrFail($id);
+        $team = Team::query()->find($id);
 
         return $this->teamService->update($team, $teamUpdateDTO);
     }
 
     public function members(int $id): array
     {
-        $team = Team::query()->findOrFail($id);
+        $team = Team::query()->find($id);
 
         return $this->teamService->members($team);
     }
 
     public function achievements(int $id): array
     {
-        return Team::query()->findOrFail($id)?->achievements()->get()->toArray();
+        return Team::query()->find($id)?->achievements()->get()->toArray() ?? [];
     }
 
     public function challenge(int $id): array
     {
-        return Team::query()->findOrFail($id)?->challenges()->get()->toArray();
+        return Team::query()->find($id)?->challenges()->get()->toArray() ?? [];
     }
 }
