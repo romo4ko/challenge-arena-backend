@@ -46,6 +46,14 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->disabled()
                     ->required(),
+                Forms\Components\TextInput::make('telegram_username')
+                    ->label('Telegram username')
+                    ->unique()
+                    ->nullable(),
+                Forms\Components\TextInput::make('telegram_id')
+                    ->label('Telegram ID')
+                    ->disabled()
+                    ->nullable(),
                 Forms\Components\Section::make()->schema([
                     Forms\Components\Checkbox::make('is_confirmed')->label('Верифицирован'),
                     Forms\Components\Checkbox::make('is_admin')->label('Администратор'),
