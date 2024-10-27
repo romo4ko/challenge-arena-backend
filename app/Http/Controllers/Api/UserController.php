@@ -57,7 +57,7 @@ class UserController extends Controller
         $achievementsTeam = Team::query()->find($id);
         $achievementPersonal = User::query()->find($id);
 
-        if(!$achievementPersonal && !$achievementsTeam)
+        if(!$achievementPersonal || !$achievementsTeam)
         {
             return [];
         }
