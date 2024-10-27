@@ -19,7 +19,7 @@ class UserController extends Controller
 
     public function teamIsCaptain(int $id): array
     {
-        $teams = User::query()->findOrFail($id);
+        $teams = User::query()->find($id);
 
         return $this->userService->teamIsCaptain($teams);
     }
