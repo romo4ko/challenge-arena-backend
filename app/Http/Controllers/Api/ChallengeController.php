@@ -20,7 +20,7 @@ class ChallengeController extends Controller
 
     public function show(int $id): array
     {
-        $challenge = Challenge::query()->findOrFail($id);
+        $challenge = Challenge::query()->find($id);
 
         return $this->challengeService->show($challenge);
     }

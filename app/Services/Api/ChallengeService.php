@@ -27,8 +27,12 @@ class ChallengeService
         return $games->toArray();
     }
 
-    public function show(Challenge $challenge): array
+    public function show(Challenge|null $challenge): array
     {
-        return ChallengeShowDTO::from($challenge)->toArray();
+        if ($challenge) {
+            return ChallengeShowDTO::from($challenge)->toArray();
+        }
+
+        return [];
     }
 }
