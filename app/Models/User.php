@@ -27,7 +27,9 @@ class User extends Authenticatable implements FilamentUser
         'about',
         'image',
         'is_admin',
-        'is_confirmed'
+        'is_confirmed',
+        'telegram_username',
+        'telegram_id',
     ];
 
     public function challenges(): BelongsToMany
