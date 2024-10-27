@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ChallengeController;
 use App\Http\Controllers\Api\TeamController;
 use App\Http\Controllers\Api\TelegramController;
 use App\Http\Controllers\Api\UserController;
@@ -16,6 +17,7 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
         Route::get('/{id}', [UserController::class, 'show'])->name('users.show');
         Route::post('/{id}', [UserController::class, 'update'])->name('users.update');
         Route::get('/{id}/teams', [UserController::class, 'team'])->name('users.team');
+        Route::get('/{id}/teams/is-captain', [UserController::class, 'teamIsCaptain'])->name('users.teamIsCaptain');
         Route::get('/{id}/challenges', [UserController::class, 'challenge'])->name('users.challenge');
         Route::get('/{id}/achievements', [UserController::class, 'achievement'])->name('users.achievement');
     });
@@ -26,6 +28,13 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
         Route::get('/{id}/members', [TeamController::class, 'members'])->name('teams.members');
         Route::get('/{id}/challenges', [TeamController::class, 'challenge'])->name('users.challenge');
         Route::get('/{id}/achievements', [TeamController::class, 'achievements'])->name('teams.achievements');
+    });
+
+    Route::group(['prefix' => 'challenges'], static function () {
+        Route::get('/', [ChallengeController::class, 'index'])->name('teams.index');
+        Route::get('/{id}', [ChallengeController::class, 'show'])->name('teams.show');
+        Route::post('/{id}/joins/personal', [ChallengeController::class, 'joinPersonal'])->name('teams.joinPersonal');
+        Route::post('/{id}/joins/teams', [ChallengeController::class, 'joinTeam'])->name('teams.joinTeam');
     });
 });
 

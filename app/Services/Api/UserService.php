@@ -8,6 +8,7 @@ use App\DTO\Api\User\Request\UserUpdateDTO;
 use App\DTO\Api\User\Response\UserAchievementPersonalDTO;
 use App\DTO\Api\User\Response\UserAchievementTeamsDTO;
 use App\DTO\Api\User\Response\UserChallengeDTO;
+use App\DTO\Api\User\Response\UserShowDTO;
 use App\DTO\Api\User\Response\UserTeamDTO;
 use App\Models\Team;
 use App\Models\User;
@@ -16,6 +17,11 @@ use Illuminate\Support\Facades\Storage;
 
 class UserService
 {
+    public function show(User $user): array
+    {
+        return UserShowDTO::from($user)->toArray();
+    }
+
     public function achievement(Team $team, User $user): array
     {
         $achievementPersonal = $user->achievements()->get();
@@ -54,6 +60,13 @@ class UserService
     public function team(User $user): array
     {
         $team = $user->teams()->get();
+
+        return UserTeamDTO::collect($team)->toArray();
+    }
+
+    public function teamIsCaptain(User $user): array
+    {
+        $team = $user->teams()->where('captain_id', $user->id)->get();
 
         return UserTeamDTO::collect($team)->toArray();
     }

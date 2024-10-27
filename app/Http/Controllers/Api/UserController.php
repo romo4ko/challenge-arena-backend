@@ -17,9 +17,18 @@ class UserController extends Controller
     ) {
     }
 
+    public function teamIsCaptain(int $id): array
+    {
+        $teams = User::query()->findOrFail($id);
+
+        return $this->userService->teamIsCaptain($teams);
+    }
+
     public function show(int $id): array
     {
-        return User::query()->findOrFail($id)?->toArray();
+        $user = User::query()->findOrFail($id);
+
+        return $this->userService->show($user);
     }
 
     public function update(int $id, UserUpdateDTO $userUpdateDTO): array|JsonResponse
