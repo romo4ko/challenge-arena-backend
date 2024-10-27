@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\Enums\ChallengeType;
+use App\Models\Enums\Challenge\ChallengeType;
 use App\Models\Challenge;
 use App\Models\Team;
 use Illuminate\Database\Seeder;

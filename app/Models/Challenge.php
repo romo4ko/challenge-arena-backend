@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\ChallengeType;
+use App\Models\Enums\Challenge\ChallengeType;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Enums\ChallengeType;
+use App\Models\Enums\Challenge\ChallengeType;
 use App\Filament\Resources\ChallengeResource\Pages;
 use App\Models\Challenge;
 use Filament\Forms;
