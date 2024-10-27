@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
         Route::get('/{id}/challenges', [TeamController::class, 'challenge'])->name('users.challenge');
         Route::get('/{id}/achievements', [TeamController::class, 'achievements'])->name('teams.achievements');
         Route::post('/{teamId}/delete/{userId}', [TeamController::class, 'delete'])->name('teams.delete');
+        Route::post('/{teamId}/join/member/{userId}', [TeamController::class, 'joinMember'])->name('teams.delete');
     });
 
     Route::group(['prefix' => 'challenges'], static function () {

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 
 use App\DTO\Api\Team\Request\TeamUpdateDTO;
 use App\Models\Team;
+use App\Models\User;
 use App\Services\Api\TeamService;
 use Illuminate\Http\JsonResponse;
 
@@ -61,6 +62,26 @@ class TeamController extends Controller
                     }
                 }
             }
+        }
+
+        return [];
+    }
+
+    public function joinMember(int $teamId, int $userId): array
+    {
+        $user = User::query()->find($userId);
+        $team = Team::query()->find($teamId);
+
+        if ($user && $team) {
+            $team->users()->attach($user->id);
+
+            if ($user->telegram_id) {
+                $tg = new TelegramController();
+
+                $tg->sendMessage($user->telegram_id, 'вы были приглашены в команду - ' . $team->name);
+            }
+
+            return $team->users()->get()->toArray();
         }
 
         return [];
