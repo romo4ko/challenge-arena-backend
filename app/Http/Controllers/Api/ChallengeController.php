@@ -24,4 +24,14 @@ class ChallengeController extends Controller
 
         return $this->challengeService->show($challenge);
     }
+
+    public function joinPersonal(): array
+    {
+        return [];
+    }
+
+    public function joinTeam(): array
+    {
+        return [];
+    }
 }
