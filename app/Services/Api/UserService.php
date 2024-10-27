@@ -17,9 +17,13 @@ use Illuminate\Support\Facades\Storage;
 
 class UserService
 {
-    public function show(User $user): array
+    public function show(User|null $user): array
     {
-        return UserShowDTO::from($user)->toArray();
+        if ($user) {
+            return UserShowDTO::from($user)->toArray();
+        }
+
+        return [];
     }
 
     public function achievement(Team|null $team, User|null $user): array

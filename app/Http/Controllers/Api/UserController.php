@@ -26,7 +26,7 @@ class UserController extends Controller
 
     public function show(int $id): array
     {
-        $user = User::query()->findOrFail($id);
+        $user = User::query()->find($id);
 
         return $this->userService->show($user);
     }
