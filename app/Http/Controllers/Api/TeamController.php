@@ -13,7 +13,8 @@ class TeamController extends Controller
 {
     public function __construct(
         protected TeamService $teamService
-    ){
+    )
+    {
     }
 
     public function show(int $id): array
@@ -43,5 +44,25 @@ class TeamController extends Controller
     public function challenge(int $id): array
     {
         return Team::query()->find($id)?->challenges()->get()->toArray() ?? [];
+    }
+
+    public function delete(int $teamId, int $userId): array
+    {
+        $team = Team::query()->find($teamId);
+
+        if ($team) {
+            $user = $team->users()->find($userId);
+            if ($user) {
+                if (auth()->id() === $team->captain_id) {
+                    if (auth()->id() !== $user->id) {
+                        $team->users()->detach($user->id);
+
+                        return $team->users()->get()->toArray();
+                    }
+                }
+            }
+        }
+
+        return [];
     }
 }
