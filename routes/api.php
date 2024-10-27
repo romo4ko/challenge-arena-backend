@@ -22,5 +22,6 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
     Route::group(['prefix' => 'teams'], static function () {
         Route::get('/{id}', [TeamController::class, 'show'])->name('teams.show');
         Route::post('/{id}', [TeamController::class, 'update'])->name('teams.update');
+        Route::get('/{id}/members', [TeamController::class, 'members'])->name('teams.members');
     });
 });

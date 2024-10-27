@@ -27,4 +27,11 @@ class TeamController extends Controller
 
         return $this->teamService->update($team, $teamUpdateDTO);
     }
+
+    public function members(int $id): array
+    {
+        $team = Team::query()->findOrFail($id);
+
+        return $this->teamService->members($team);
+    }
 }
