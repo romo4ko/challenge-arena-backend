@@ -1,40 +1,48 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory;
+    use Notifiable;
+    use HasApiTokens;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'surname',
+        'patronymic',
         'email',
         'password',
         'about',
-        'image_id',
-        'is_admin'
+        'image',
+        'is_admin',
+        'is_confirmed'
     ];
 
-    public function challenges()
+    public function challenges(): BelongsToMany
     {
         return $this->belongsToMany(Challenge::class, 'users_challenges');
     }
 
-    public function image()
+    public function achievements(): BelongsToMany
     {
-        return $this->belongsTo(Image::class);
+        return $this->belongsToMany(Achievement::class, 'users_achievements');
+    }
+
+    public function teams(): BelongsToMany
+    {
+        return $this->belongsToMany(Team::class, 'users_teams', 'user_id', 'team_id');
     }
 
     /**
@@ -58,5 +66,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return (bool) $this->is_admin;
     }
 }

@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('surname');
-            $table->string('patronymic');
+            $table->string('patronymic')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->text('about')->nullable();
-            $table->foreignId('image_id')->nullable()->constrained('images')->onDelete('set null');
+            $table->string('image')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->boolean('is_confirmed')->default(false);
             $table->rememberToken();
