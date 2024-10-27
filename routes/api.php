@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\TeamController;
+use App\Http\Controllers\Api\TelegramController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,5 +23,10 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
     Route::group(['prefix' => 'teams'], static function () {
         Route::get('/{id}', [TeamController::class, 'show'])->name('teams.show');
         Route::post('/{id}', [TeamController::class, 'update'])->name('teams.update');
+        Route::get('/{id}/members', [TeamController::class, 'members'])->name('teams.members');
+        Route::get('/{id}/challenges', [TeamController::class, 'challenge'])->name('users.challenge');
+        Route::get('/{id}/achievements', [TeamController::class, 'achievements'])->name('teams.achievements');
     });
 });
+
+Route::post('sync-telegram', [TelegramController::class, 'syncTelegram'])->name('auth.syncTelegram');

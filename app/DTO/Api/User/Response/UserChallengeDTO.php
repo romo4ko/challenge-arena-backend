@@ -12,7 +12,8 @@ class UserChallengeDTO extends Data
         public ?string $image,
         public string $name,
         public string $description,
-        public string $endDate
+        public string $endDate,
+        public string $startDate
     ){
     }
 
@@ -23,7 +24,8 @@ class UserChallengeDTO extends Data
             $challenge->image,
             $challenge->name,
             $challenge->description,
-            $challenge->end_date
+            $challenge->end_date,
+            $challenge->start_date
         );
     }
 }
